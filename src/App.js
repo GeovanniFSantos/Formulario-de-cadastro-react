@@ -1,10 +1,14 @@
 import './App.css';
-import { Component } from 'react';
+import { Component, Fragment } from 'react';
+import FormularioCadastro from './components/FormularioCadastro/formularioCadastro';
 
 class App extends Component {
   render() {
     return (
-      <h1>Formulario de cadastro!</h1>
+      <Fragment>
+        <h1>Formulario de cadastro!</h1>
+        <FormularioCadastro />
+      </Fragment>
     );
   }
 }
