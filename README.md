@@ -5,7 +5,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 ## Available Scripts
 
 ***
-## Blibioteca instalada: [Material-ui](https://v4.mui.com/pt/)
+## Blibioteca instalada: [Material-ui](https://mui.com/material-ui/getting-started/installation/)
 #### npm install @mui/material
 #### npm install @emotion/react
 #### npm install @emotion/styled

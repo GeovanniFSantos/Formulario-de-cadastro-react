@@ -1,14 +1,16 @@
 import './App.css';
-import { Component, Fragment } from 'react';
+import { Component } from 'react';
 import FormularioCadastro from './components/FormularioCadastro/formularioCadastro';
+import { Container, Typography } from "@mui/material"
+import 'fontsource-roboto'
 
 class App extends Component {
   render() {
     return (
-      <Fragment>
-        <h1>Formulario de cadastro!</h1>
+      <Container>
+        <Typography variant='h2' align='center'>Formulario de cadastro!</Typography>
         <FormularioCadastro />
-      </Fragment>
+      </Container>
     );
   }
 }
