@@ -1,61 +1,29 @@
-import React, {useState} from "react";
-import {TextField , Button, Switch, FormControlLabel } from '@mui/material';
+import React, { useState } from "react";
+import DadosPessoais from "../DadosPessoais/DadosPessoais";
+import DadosUsuario from "../DadosUsuario/DadosUsuario";
+import DadosEntrega from "../DadosDeEntregas/DadosEntrega";
+import { Typography } from "@mui/material";
 
-function FormularioCadastro(){
+function FormularioCadastro({aoEnviar, validarCPF}){
+    const [etapaAtual, setEtapaAtual] = useState(1); 
 
-    const [nome, setNome] = useState(" ");
-    const [sobrenome, setSobrenome] = useState(" ");
-    const [cpf, setCpf] = useState(" ");
-    const [promocoes, setPromocoes] = useState(true);
-    const [novidades, setNovidades] = useState(true);
+    function proximo(){
+        setEtapaAtual(etapaAtual+1)
+    }
 
-        return(
-            <form onSubmit={(event) => {
-                event.preventDefault();
-                console.log({nome, sobrenome, cpf, promocoes, novidades})
-             }}>
-
-                <TextField 
-                value={nome}
-                onChange={(event) => {setNome(event.target.value);}}
-                id="nome" 
-                label="Nome" 
-                margin="normal" 
-                fullWidth/>
-
-                <TextField 
-                value={sobrenome}
-                onChange={(event) => {setSobrenome(event.target.value); }}
-                id="sobrenome" 
-                label="Sobre Nome" 
-                margin="normal" 
-                fullWidth/>
-
-                <TextField 
-                value={cpf}
-                onChange={(event) => {
-                setCpf(event.target.value); 
-                   }}
-                id="cpf" 
-                label="Cpf" 
-                margin="normal" 
-                fullWidth/>
-
-                <FormControlLabel 
-                label="Promoções" 
-                control={<Switch checked={promocoes} onChange={(event) => {setPromocoes(event.target.checked)}} 
-                nome="promocoes" 
-                color="primary"/>}/>
-
-                <FormControlLabel 
-                label="Novidades" 
-                control={<Switch checked={novidades} onChange={(event) => {setNovidades(event.target.checked)}}
-                nome="novidades" 
-                color="primary"/>}/>
-
-                <Button variant="contained" color="primary" type="submit">Cadastrar</Button>
-            </form>
-        )
+    function formularioAtual(etapa){
+        switch(etapa){
+            case 1:
+                return <DadosUsuario aoEnviar={proximo}/>;
+            case 2:
+                return <DadosPessoais aoEnviar={proximo} validarCPF={validarCPF}/>;
+            case 3:
+                return <DadosEntrega aoEnviar={aoEnviar}/>;
+        default:
+            return <Typography>Erro ao selecionar formulário</Typography>
+        }
+    }
+        return( <> { formularioAtual(etapaAtual) }</>)
 }
 
 
