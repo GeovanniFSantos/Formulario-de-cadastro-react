@@ -1,29 +1,44 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import DadosPessoais from "../DadosPessoais/DadosPessoais";
 import DadosUsuario from "../DadosUsuario/DadosUsuario";
 import DadosEntrega from "../DadosDeEntregas/DadosEntrega";
-import { Typography } from "@mui/material";
+import { Step, StepLabel, Stepper, Typography } from "@mui/material";
 
-function FormularioCadastro({aoEnviar, validarCPF}){
-    const [etapaAtual, setEtapaAtual] = useState(1); 
+function FormularioCadastro({aoEnviar, validacoes}){
+    const [etapaAtual, setEtapaAtual] = useState(0);
+    const [dadosColetados, setDados] = useState({});
+    useEffect(()=> {
+        if(etapaAtual === formulario.length-1){
+          aoEnviar(dadosColetados)
+        }
+    })
+        
+
+    const formulario = [
+     <DadosUsuario aoEnviar={coletarDados}  validacoes={validacoes}/>,
+     <DadosPessoais aoEnviar={coletarDados} validacoes={validacoes}/>,
+     <DadosEntrega aoEnviar={coletarDados}  validacoes={validacoes}/>,
+     <Typography variant="h5">Obrigado pelo Cadastro!</Typography>
+    ];
+
+    function coletarDados(dados){
+        setDados({...dadosColetados, ...dados})
+        proximo();
+    };
 
     function proximo(){
         setEtapaAtual(etapaAtual+1)
-    }
+    };
 
-    function formularioAtual(etapa){
-        switch(etapa){
-            case 1:
-                return <DadosUsuario aoEnviar={proximo}/>;
-            case 2:
-                return <DadosPessoais aoEnviar={proximo} validarCPF={validarCPF}/>;
-            case 3:
-                return <DadosEntrega aoEnviar={aoEnviar}/>;
-        default:
-            return <Typography>Erro ao selecionar formulário</Typography>
-        }
-    }
-        return( <> { formularioAtual(etapaAtual) }</>)
+        return( <> 
+        <Stepper activeStep={etapaAtual}>
+            <Step><StepLabel>Login</StepLabel></Step>
+            <Step><StepLabel>Pessoal</StepLabel></Step>
+            <Step><StepLabel>Entrega</StepLabel></Step>
+            <Step><StepLabel>Finalização</StepLabel></Step>
+        </Stepper>
+        { formulario[etapaAtual] }
+        </>)
 }
 
 
